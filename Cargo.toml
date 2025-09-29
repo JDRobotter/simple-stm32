@@ -1,0 +1,36 @@
+[package]
+name = "simple-stm32"
+version = "0.1.0"
+edition = "2021"
+
+[profile.dev]
+lto = 'fat'
+codegen-units = 1
+opt-level = 'z'
+
+[profile.release]
+lto = 'fat'
+incremental = false
+codegen-units = 1
+#debug = false
+# 'z' optimise for size and turn off loop vectorization
+opt-level = 'z'
+# remove any symbol from binary
+#strip = 'symbols'
+# disable debug_assert macros
+debug-assertions = false
+# disable overflow checks
+overflow-checks = false
+
+[features]
+default = []
+
+[dependencies.stm32f0xx-hal]
+    version = "0.18.0"
+    features = ["stm32f030x6"]
+
+[dependencies]
+cortex-m = { version="0.7.6", features = ["critical-section-single-core", "inline-asm"] }
+cortex-m-rt = "0.7.2"
+embedded-hal = "1.0.0"
+irq = "0.2.3"
